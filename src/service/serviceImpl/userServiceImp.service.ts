@@ -39,4 +39,38 @@ export class UserServiceImplementation implements UserServices{
             return users;
         }
     
+        async updateUser(id: number, data: Prisma.UserUpdateInput): Promise<User> {
+            const existingUser = await db.user.findUnique({
+                where: {
+                    id,
+                }
+            });
+            if(!existingUser){
+                throw new customError(404, "User Not Found")
+            }
+            if(data.email){
+                const existingEmail = await db.user.findUnique({
+                    where: {email: data.email as string},
+                });
+                if(existingEmail && existingEmail.id !==id){
+                    throw new customError(409, "Email Already Exists")
+                }
+            }
+            return db.user.update({
+                where: {id},
+                data
+            })
+        }   
+
+        async deleteUser(id: number): Promise<void> {
+            const existingUser = await db.user.findUnique({
+                where: {id},
+            });
+            if (!existingUser) {
+                throw new customError(404, "User Not Found")
+            }
+            await db.user.delete({
+                where: {id},
+            })
+        }
 }
