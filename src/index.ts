@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import { errorHandler } from './utils/errorHandle';
 import userRouter from './route/user.route';
+import paymentRoute from './route/payment.route';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/payment", paymentRoute);
 
 app.use(errorHandler)
 
