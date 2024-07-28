@@ -4,6 +4,7 @@ import cors from 'cors'
 import { errorHandler } from './utils/errorHandle';
 import userRouter from './route/user.route';
 import paymentRoute from './route/payment.route';
+import webhookRoute from './route/webhook.route';
 
 dotenv.config();
 
@@ -24,6 +25,8 @@ app.use(express.json());
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/payment", paymentRoute);
+app.use("/api/v1/webhook", webhookRoute);
+
 
 app.use(errorHandler)
 
