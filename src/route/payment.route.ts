@@ -8,5 +8,6 @@ const paymentRoute = Router();
 const paymentController = new PaymentController();
 
 paymentRoute.post("/", validationMiddleware(PayDto), paymentController.payment);
+paymentRoute.post("/fl", validationMiddleware(PayDto), paymentController.flutterWave);
 
 export default paymentRoute;

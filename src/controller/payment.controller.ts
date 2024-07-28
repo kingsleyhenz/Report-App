@@ -19,4 +19,14 @@ export class PaymentController{
             
         }
     }
+
+    public flutterWave = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const paymentDto = req.body as PayDto;
+            const response = await this.paymentService.flutterWave(paymentDto);
+            res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
