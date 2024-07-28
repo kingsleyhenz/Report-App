@@ -7,5 +7,6 @@ const webhookRoute = Router();
 const webhookController = new WebhookController();
 
 webhookRoute.post("/", webhookController.handle);
+webhookRoute.post("/fl", webhookController.handleFlutterwave);
 
 export default webhookRoute;

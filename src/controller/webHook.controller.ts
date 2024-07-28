@@ -20,4 +20,22 @@ export class WebhookController{
             
         }
     }
+
+    public handleFlutterwave = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try{    
+        const signature = req.headers['verif-hash'] as string;
+        console.log(req.headers);   
+        
+        console.log("Incoming signature:", signature);
+        if (!signature) {
+            throw new Error("No signature found");
+        }
+        await this.webhookService.verifyFlutterwave(signature);
+        res.status(200).send();
+        await this.webhookService.handleFlutterwave(req.body);
+    } catch (error) {
+        console.error("Error handling webhook:", error);
+        next(error);
+    }
+    }
 }
